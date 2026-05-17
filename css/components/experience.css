@@ -6,7 +6,7 @@
 }
 
 .experience-container {
-    max-width: 1140px;
+    max-width: 1300px;
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -19,7 +19,7 @@
 
 .experience-card {
     display: grid;
-    grid-template-columns: minmax(260px, 340px) 1fr;
+    grid-template-columns: minmax(180px, 240px) 1fr;
     background: linear-gradient(155deg, #1c2028 0%, #14171e 100%);
     border: 1px solid #323844;
     border-radius: 12px;

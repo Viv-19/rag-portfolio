@@ -22,7 +22,7 @@ export function initPortfolioAgent() {
         agentStatus.classList.remove('hidden');
         statusText.textContent = 'Initializing portfolio agent...';
 
-        const firstSection = document.getElementById('skills');
+        const firstSection = document.getElementById('experience');
         if (firstSection) {
             setTimeout(() => {
                 firstSection.scrollIntoView({ behavior: 'smooth' });

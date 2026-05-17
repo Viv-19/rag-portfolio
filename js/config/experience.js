@@ -9,7 +9,7 @@ export const EXPERIENCES = [
         subtitle: 'Intel Collaboration · Research',
         period: 'Dec 2025 — Present',
         location: 'India',
-        image: 'assets/experience-tcs.png',
+        image: 'assets/reading_paper.png',
         imageAlt: 'TCS research internship',
         lead: 'Working on Intel-supported research into how stable large language models are during real inference — not just training benchmarks.',
         highlights: [
@@ -26,7 +26,7 @@ export const EXPERIENCES = [
         subtitle: 'Cloud & Production Systems',
         period: 'Jul 2025 — Nov 2025',
         location: 'Remote',
-        image: 'assets/experience-inai.png',
+        image: 'assets/devops.png',
         imageAlt: 'INAI Worlds internship',
         lead: 'Helped design and run production-style cloud infrastructure for AI products — focused on reliability, monitoring, and safe deployments.',
         highlights: [
