@@ -1,0 +1,96 @@
+/* =========================================
+   Responsive breakpoints
+   ========================================= */
+@media (max-width: 768px) {
+    .name { font-size: 3rem; }
+    .title { font-size: 1.2rem; }
+
+    .nav-right {
+        gap: 12px;
+    }
+
+    .nav-links {
+        gap: 14px;
+    }
+
+    .nav-links li a {
+        font-size: 0.75rem;
+    }
+
+    .nav-agent-btn {
+        padding: 8px 12px;
+        font-size: 0.72rem;
+    }
+
+    .hero-bottom .mission {
+        font-size: 1.05rem;
+    }
+
+    .hero-connect {
+        top: 70px;
+        left: 16px;
+    }
+
+    .hero-social {
+        gap: 8px;
+        max-width: calc(100vw - 32px);
+    }
+
+    .hero-social a {
+        width: 48px;
+        height: 48px;
+    }
+
+    .hero-social-icon {
+        width: 22px;
+        height: 22px;
+    }
+
+    .skills-orbit {
+        min-height: 88vh;
+    }
+
+    .skills-center-image {
+        width: min(280px, 72vw);
+        max-height: min(320px, 50vh);
+    }
+
+    .skills-orbit-core::before {
+        width: min(320px, 80vw);
+        height: min(320px, 80vw);
+    }
+
+    .skill-bubble {
+        font-size: 0.65rem;
+        padding: 6px 10px;
+        white-space: normal;
+        text-align: center;
+        max-width: 96px;
+    }
+
+    .skills-cluster-label {
+        font-size: 0.62rem;
+        padding: 6px 10px;
+        max-width: 130px;
+        white-space: normal;
+        text-align: center;
+        line-height: 1.25;
+        letter-spacing: 0.06em;
+    }
+
+    .section-header {
+        font-size: 0.9rem;
+    }
+
+    .timeline::before {
+        left: 11px;
+    }
+
+    .timeline-dot {
+        left: 7px;
+    }
+
+    .timeline-item {
+        padding-left: 40px;
+    }
+}

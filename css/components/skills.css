@@ -1,0 +1,333 @@
+/* =========================================
+   Skills orbit — center image + energy lines + bubbles
+   ========================================= */
+.skills-section {
+    padding: 100px 0 80px;
+    overflow: hidden;
+}
+
+.skills-section-inner {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 12px;
+}
+
+.skills-section .section-header {
+    margin-bottom: 40px;
+}
+
+.skills-orbit {
+    position: relative;
+    width: 100%;
+    min-height: min(108vh, 1100px);
+    margin: 0 auto;
+}
+
+/* Category zone panels */
+.skills-zones {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.skills-zone {
+    position: absolute;
+    left: var(--zx);
+    top: var(--zy);
+    width: var(--zw);
+    height: var(--zh);
+    border-radius: 14px;
+    border: 1px solid color-mix(in srgb, var(--cat-color) 40%, transparent);
+    border-left: 3px solid var(--cat-color);
+    background: linear-gradient(
+        145deg,
+        color-mix(in srgb, var(--cat-color) 12%, rgba(10, 13, 20, 0.92)) 0%,
+        rgba(10, 13, 20, 0.55) 55%,
+        transparent 100%
+    );
+    box-shadow: inset 0 0 30px color-mix(in srgb, var(--cat-color) 8%, transparent);
+    opacity: 0;
+    transition: opacity 1s ease 0.25s;
+}
+
+.agent-section.visible .skills-zone {
+    opacity: 1;
+}
+
+/* SVG energy lines (same % space as bubbles) */
+.skills-connections {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    overflow: visible;
+}
+
+.skills-energy-group {
+    opacity: 0;
+    transition: opacity 1.2s ease 0.3s;
+}
+
+.agent-section.visible .skills-energy-group {
+    opacity: 1;
+}
+
+.skill-energy-line--base {
+    stroke-width: 1px;
+    vector-effect: non-scaling-stroke;
+    stroke-linecap: round;
+}
+
+.skill-energy-line--flow {
+    stroke-width: 1.75px;
+    stroke-linecap: round;
+    stroke-dasharray: 5 9;
+    vector-effect: non-scaling-stroke;
+    stroke-opacity: 0.9;
+    filter: url(#skillEnergyGlow);
+    opacity: 0;
+    animation: energyFlowIn var(--line-duration, 2.2s) linear infinite;
+    animation-delay: var(--line-delay, 0s);
+}
+
+.agent-section.visible .skill-energy-line--flow {
+    opacity: 1;
+}
+
+@keyframes energyFlowIn {
+    0% {
+        stroke-dashoffset: 20;
+        opacity: 0.45;
+    }
+    45% {
+        opacity: 0.85;
+    }
+    100% {
+        stroke-dashoffset: 0;
+        opacity: 0.45;
+    }
+}
+
+.skills-core-energy {
+    opacity: 0;
+    transition: opacity 1s ease 0.5s;
+}
+
+.agent-section.visible .skills-core-energy {
+    opacity: 1;
+}
+
+.skills-core-ring {
+    fill: none;
+    stroke: rgba(72, 202, 228, 0.45);
+    stroke-width: 0.35;
+    vector-effect: non-scaling-stroke;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: coreRingPulse 2.5s ease-in-out infinite;
+}
+
+.skills-core-dot {
+    fill: var(--color-accent);
+    filter: url(#skillEnergyGlow);
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: coreDotPulse 2s ease-in-out infinite;
+}
+
+@keyframes coreRingPulse {
+    0%, 100% {
+        transform: scale(0.9);
+        stroke-opacity: 0.35;
+    }
+    50% {
+        transform: scale(1.35);
+        stroke-opacity: 0.85;
+    }
+}
+
+@keyframes coreDotPulse {
+    0%, 100% {
+        opacity: 0.7;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+.skills-orbit-core {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.skills-orbit-core::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: min(520px, 58vw);
+    height: min(520px, 58vw);
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        rgba(72, 202, 228, 0.18) 0%,
+        rgba(167, 139, 250, 0.1) 25%,
+        rgba(52, 211, 153, 0.08) 45%,
+        rgba(249, 115, 22, 0.06) 60%,
+        transparent 72%
+    );
+    animation: coreAbsorbGlow 3s ease-in-out infinite;
+    z-index: -1;
+}
+
+@keyframes coreAbsorbGlow {
+    0%, 100% {
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(0.95);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.05);
+    }
+}
+
+.skills-center-image {
+    display: block;
+    width: min(500px, 54vw);
+    height: auto;
+    max-height: min(500px, 58vh);
+    object-fit: contain;
+    filter: drop-shadow(0 0 50px rgba(72, 202, 228, 0.25));
+    opacity: 0;
+    transform: scale(0.92);
+    transition: opacity 1s ease 0.4s, transform 1s ease 0.4s;
+}
+
+.agent-section.visible .skills-center-image {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Category zone titles — always above skill bubbles */
+.skills-cluster-labels {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+}
+
+.skills-cluster-label {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    transform: translate(-50%, 0);
+    z-index: 25;
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #fff;
+    white-space: nowrap;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 2px solid var(--cat-color);
+    background: linear-gradient(
+        135deg,
+        rgba(10, 13, 20, 0.98) 0%,
+        color-mix(in srgb, var(--cat-color) 18%, rgba(10, 13, 20, 0.98)) 100%
+    );
+    box-shadow:
+        0 0 24px var(--cat-glow),
+        0 4px 24px rgba(0, 0, 0, 0.6),
+        inset 0 0 12px color-mix(in srgb, var(--cat-color) 15%, transparent);
+    text-shadow: 0 0 12px var(--cat-glow);
+    opacity: 0;
+    transition: opacity 0.8s ease 0.35s;
+}
+
+.skills-cluster-label::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    top: 0;
+    height: 2px;
+    background: var(--cat-color);
+    border-radius: 0 0 2px 2px;
+    box-shadow: 0 0 8px var(--cat-color);
+}
+
+.agent-section.visible .skills-cluster-label {
+    opacity: 1;
+}
+
+.skills-bubbles {
+    position: absolute;
+    inset: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    z-index: 5;
+}
+
+.skill-bubble {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    transform: translate(-50%, -50%);
+    padding: 8px 14px;
+    font-size: 0.76rem;
+    max-width: 10.5rem;
+    line-height: 1.25;
+    font-weight: 500;
+    font-family: var(--font-body);
+    color: var(--color-text-main);
+    white-space: nowrap;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--cat-color) 55%, transparent);
+    background: color-mix(in srgb, var(--cat-color) 8%, rgba(18, 22, 30, 0.92));
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    transition: opacity 0.6s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.skill-bubble::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--cat-color);
+    box-shadow: 0 0 10px var(--cat-glow);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    z-index: -1;
+}
+
+.agent-section.visible .skill-bubble {
+    opacity: 1;
+}
+
+.agent-section.visible .skill-bubble::after {
+    opacity: 0.7;
+}
+
+.skill-bubble:hover {
+    border-color: var(--cat-color);
+    color: #fff;
+    box-shadow: 0 0 20px var(--cat-glow);
+    z-index: 5;
+}

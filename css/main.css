@@ -1,0 +1,20 @@
+/**
+ * Main stylesheet — single entry point for deployment.
+ * Import order: tokens → base → layout → components → responsive overrides.
+ */
+
+@import url('base/variables.css');
+@import url('base/reset.css');
+@import url('base/utilities.css');
+
+@import url('components/navbar.css');
+@import url('components/agent-status.css');
+@import url('components/hero.css');
+@import url('components/sections.css');
+@import url('components/skills.css');
+@import url('components/projects.css');
+@import url('components/experience.css');
+@import url('components/contact.css');
+@import url('components/glitch.css');
+
+@import url('layout/responsive.css');
