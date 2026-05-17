@@ -7,7 +7,7 @@
     left: 0;
     width: 100%;
     z-index: 2000;
-    padding: 14px 0;
+    padding: 10px 0;
     background: rgba(10, 13, 20, 0.65);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(72, 202, 228, 0.2);
@@ -26,7 +26,7 @@
 
 .nav-logo {
     font-family: var(--font-heading);
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     font-weight: 700;
     color: var(--color-accent);
     letter-spacing: 0.5px;
@@ -36,7 +36,6 @@
 
 .nav-logo:hover {
     color: #fff;
-    text-shadow: none;
 }
 
 .nav-right {
@@ -52,7 +51,7 @@
 
 .nav-links li a {
     color: var(--color-accent);
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 600;
     letter-spacing: 0.5px;
     text-transform: uppercase;

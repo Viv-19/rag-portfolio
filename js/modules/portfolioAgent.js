@@ -1,34 +1,9 @@
 /**
- * Portfolio agent: start button, scroll reveal, and status overlay.
+ * Portfolio interactions: Scroll reveal.
  */
 
-import { AGENT_STATUS_MESSAGES } from '../config/content.js';
-
-/**
- * Wires the agent CTA, intersection observer, and scroll-based status visibility.
- */
 export function initPortfolioAgent() {
-    const startBtn = document.getElementById('start-agent-btn');
-    const agentStatus = document.getElementById('agent-status');
-    const statusText = document.querySelector('.status-text');
     const sections = document.querySelectorAll('.agent-section');
-
-    if (!startBtn || !agentStatus || !statusText) {
-        console.warn('[portfolioAgent] Required DOM nodes missing — agent flow disabled.');
-        return;
-    }
-
-    startBtn.addEventListener('click', () => {
-        agentStatus.classList.remove('hidden');
-        statusText.textContent = 'Initializing portfolio agent...';
-
-        const firstSection = document.getElementById('experience');
-        if (firstSection) {
-            setTimeout(() => {
-                firstSection.scrollIntoView({ behavior: 'smooth' });
-            }, 800);
-        }
-    });
 
     const observerOptions = {
         root: null,
@@ -40,26 +15,31 @@ export function initPortfolioAgent() {
         entries.forEach((entry) => {
             if (!entry.isIntersecting) return;
 
-            const targetId = entry.target.id;
-            agentStatus.classList.remove('hidden');
-
-            if (AGENT_STATUS_MESSAGES[targetId]) {
-                statusText.textContent = AGENT_STATUS_MESSAGES[targetId];
-            }
-
             entry.target.classList.remove('hidden');
             entry.target.classList.add('visible');
+
+            // Typewriter effect for section headers
+            const typewriter = entry.target.querySelector('.section-typewriter');
+            if (typewriter) {
+                const text = typewriter.getAttribute('data-text');
+                typewriter.textContent = '';
+                typewriter.classList.add('typing');
+                
+                let i = 0;
+                const speed = 100;
+                function typeWriter() {
+                    if (i < text.length) {
+                        typewriter.textContent += text.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, speed);
+                    }
+                }
+                setTimeout(typeWriter, 500); // 500ms delay after section becomes visible
+            }
+
             observer.unobserve(entry.target);
         });
     }, observerOptions);
 
     sections.forEach((section) => sectionObserver.observe(section));
-
-    window.addEventListener('scroll', () => {
-        if (window.scrollY < 100) {
-            agentStatus.classList.add('hidden');
-        } else {
-            agentStatus.classList.remove('hidden');
-        }
-    });
 }

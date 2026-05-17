@@ -10,6 +10,7 @@
 
 .projects-section .section-header {
     margin-bottom: 16px;
+    align-self: flex-start;
 }
 
 .projects-section-inner {

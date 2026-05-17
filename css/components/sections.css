@@ -14,29 +14,26 @@
 }
 
 .section-header {
-    margin-bottom: 60px;
-    font-family: var(--font-mono);
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.section-typewriter {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 3.5vw, 3rem);
     color: var(--color-accent);
-    border-bottom: 1px solid var(--color-border);
-    padding-bottom: 10px;
-    display: inline-block;
-}
-
-.agent-log {
-    display: inline-block;
-    overflow: hidden;
+    font-weight: 700;
+    margin: 0;
+    padding-right: 5px;
+    border-right: 3px solid transparent;
     white-space: nowrap;
-    border-right: 2px solid var(--color-accent);
-    width: 0;
+    min-height: clamp(2.4rem, 4.2vw, 3.6rem); /* prevent layout shift */
 }
 
-.agent-section.visible .agent-log {
-    animation: typing 2s steps(40, end) forwards, blink-caret 0.75s step-end infinite;
-}
-
-@keyframes typing {
-    from { width: 0; }
-    to { width: 100%; }
+/* Blinking cursor class added by JS, or just animate border */
+.section-typewriter.typing {
+    animation: blink-caret 0.75s step-end infinite;
 }
 
 @keyframes blink-caret {

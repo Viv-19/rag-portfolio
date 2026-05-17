@@ -128,7 +128,7 @@
 
 .experience-card-role {
     font-family: var(--font-heading);
-    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    font-size: clamp(1.6rem, 2.5vw, 2rem);
     font-weight: 600;
     color: #fff;
     margin: 0 0 6px;
@@ -136,7 +136,7 @@
 }
 
 .experience-card-company {
-    font-size: clamp(0.95rem, 1.3vw, 1.1rem);
+    font-size: clamp(1.2rem, 1.8vw, 1.4rem);
     color: var(--color-accent);
     margin: 0 0 4px;
     font-weight: 500;
@@ -214,4 +214,73 @@
     border: 1px solid #2e343f;
     padding: 5px 10px;
     border-radius: 4px;
+}
+
+/* Logo styling */
+.experience-card-title-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.experience-logos-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.experience-company-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    object-fit: contain;
+    background: #fff;
+    padding: 6px;
+    border: 1px solid #323844;
+}
+
+/* Accordion Toggle */
+.experience-card-details-container {
+    margin-top: 25px;
+    border-top: 1px solid #323844;
+    padding-top: 15px;
+}
+
+.experience-details-toggle {
+    background: none;
+    border: none;
+    color: var(--color-accent);
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+}
+
+.experience-details-toggle:hover {
+    color: #fff;
+}
+
+.arrow-icon {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+}
+
+.experience-details-toggle[aria-expanded="true"] .arrow-icon {
+    transform: rotate(180deg);
+}
+
+.experience-card-details-content {
+    margin-top: 15px;
+    animation: fadeIn 0.3s ease;
+}
+
+.experience-card-details-content[hidden] {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
