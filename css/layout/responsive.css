@@ -23,7 +23,7 @@
     }
 
     .hero-bottom .mission {
-        font-size: 1.05rem;
+        font-size: clamp(1.35rem, 5vw, 1.75rem);
     }
 
     .hero-connect {
@@ -78,19 +78,81 @@
         letter-spacing: 0.06em;
     }
 
+    .projects-stage {
+        min-height: auto;
+    }
+
+    .projects-hub {
+        height: auto;
+        min-height: min(70.4vh, 640px);
+    }
+
+    .projects-hub.is-expanded {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        min-height: auto;
+        padding-bottom: 12px;
+    }
+
+    .projects-hub.is-expanded .projects-spokes {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        order: 2;
+        position: static;
+        pointer-events: auto;
+    }
+
+    .projects-hub.is-expanded .projects-core {
+        order: 1;
+        align-self: center;
+        margin: 8px 0 4px;
+    }
+
+    .projects-hub.is-expanded .project-spoke {
+        width: 100%;
+    }
+
+    .projects-core-image {
+        width: min(72vw, 340px);
+        max-height: min(40vh, 340px);
+    }
+
+    .projects-hub.is-expanded .projects-core-image {
+        width: min(36vw, 130px);
+        max-height: min(22vh, 150px);
+    }
+
+    .project-spoke-inner {
+        min-height: 0;
+        padding: 20px 22px;
+    }
+
+    .project-spoke-title {
+        font-size: 1.15rem;
+    }
+
     .section-header {
         font-size: 0.9rem;
     }
 
-    .timeline::before {
-        left: 11px;
+    .experience-card {
+        grid-template-columns: 1fr;
     }
 
-    .timeline-dot {
-        left: 7px;
+    .experience-card-media {
+        min-height: 200px;
+        border-right: none;
+        border-bottom: 1px solid #2a2f38;
     }
 
-    .timeline-item {
-        padding-left: 40px;
+    .experience-card-body {
+        border-left: none;
+        border-top: 3px solid var(--color-accent);
+    }
+
+    .experience-card-meta {
+        align-items: flex-start;
     }
 }

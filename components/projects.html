@@ -1,58 +1,46 @@
 <!-- Section: Projects / Build Layer -->
-<section id="projects" class="agent-section hidden">
-    <div class="container">
+<section id="projects" class="agent-section projects-section hidden">
+    <div class="projects-section-inner">
         <div class="section-header">
             <span class="agent-log">&gt; Agent compiling key builds...</span>
         </div>
 
-        <div class="projects-grid">
-            <article class="project-card">
-                <div class="project-header">
-                    <h3>vivesh-coder</h3>
-                    <a href="#" class="project-link">GitHub</a>
-                </div>
-                <p class="project-purpose">Fine-tuned Llama 3.2 3B coding model</p>
-                <div class="project-stack">
-                    <span>PyTorch</span> <span>Transformers</span> <span>Fine-Tuning</span>
-                </div>
-                <p class="project-impact">Custom local LLM solution tailored for advanced code generation and reasoning.</p>
-            </article>
+        <div class="projects-cluster">
+            <p id="projects-hint" class="projects-hint">Click on the pic to see the projects</p>
 
-            <article class="project-card">
-                <div class="project-header">
-                    <h3>Academic Sloth</h3>
-                    <a href="#" class="project-link">Demo</a>
-                </div>
-                <p class="project-purpose">AI research assistant with RAG</p>
-                <div class="project-stack">
-                    <span>FastAPI</span> <span>LangChain</span> <span>Vector DB</span>
-                </div>
-                <p class="project-impact">End-to-end production-grade RAG pipeline capable of ingesting and analyzing academic papers.</p>
-            </article>
+            <div class="projects-stage">
+                <div id="projects-hub" class="projects-hub">
+                    <button
+                        type="button"
+                        id="projects-core-btn"
+                        class="projects-core"
+                        aria-label="Toggle project cards"
+                        aria-expanded="false"
+                    >
+                        <img
+                            src="assets/project%20image.png"
+                            alt="Developer at work — click to explore projects"
+                            class="projects-core-image"
+                            width="560"
+                            height="560"
+                        />
+                    </button>
 
-            <article class="project-card">
-                <div class="project-header">
-                    <h3>AI Job Hunt Assistant</h3>
-                    <a href="#" class="project-link">GitHub</a>
+                    <div id="projects-spokes" class="projects-spokes" aria-live="polite"></div>
                 </div>
-                <p class="project-purpose">Autonomous AI job-hunt workflow</p>
-                <div class="project-stack">
-                    <span>Agentic Workflows</span> <span>n8n</span> <span>LLMs</span>
-                </div>
-                <p class="project-impact">Automated pipeline to find, analyze, and apply to job postings using AI agents.</p>
-            </article>
+            </div>
 
-            <article class="project-card">
-                <div class="project-header">
-                    <h3>Sentinel-Graph</h3>
-                    <a href="#" class="project-link">GitHub</a>
-                </div>
-                <p class="project-purpose">Multi-agent code review system</p>
-                <div class="project-stack">
-                    <span>LangGraph</span> <span>Agents</span> <span>Python</span>
-                </div>
-                <p class="project-impact">Orchestrated multi-agent system for competitive programming analysis and automated code review.</p>
-            </article>
+            <footer class="projects-footer">
+                <a
+                    id="projects-github-link"
+                    class="projects-github-cta"
+                    href="https://github.com/Viv-19"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    More projects on GitHub &rarr;
+                </a>
+            </footer>
         </div>
     </div>
 </section>

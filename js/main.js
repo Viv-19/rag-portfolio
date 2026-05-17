@@ -9,6 +9,8 @@ import { loadAllComponents } from './modules/componentLoader.js';
 import { initGlitchEffects } from './modules/glitchEffects.js';
 import { initPortfolioAgent } from './modules/portfolioAgent.js';
 import { initSkillsBubbles } from './modules/skillsBubbles.js';
+import { initProjectsHub } from './modules/projectsHub.js';
+import { initExperienceCards } from './modules/experienceCards.js';
 
 function showLoadError(message) {
     const mount = document.getElementById('mount-sections');
@@ -29,6 +31,8 @@ async function bootstrap() {
         initGlitchEffects();
         initPortfolioAgent();
         initSkillsBubbles();
+        initProjectsHub();
+        initExperienceCards();
     } catch (error) {
         console.error('[main]', error);
         showLoadError(error.message || 'Component loading failed.');

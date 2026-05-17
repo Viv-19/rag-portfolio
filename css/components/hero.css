@@ -158,8 +158,11 @@
 }
 
 .hero-bottom .mission {
-    font-size: 1.25rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 3.8vw, 2.25rem);
     font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.02em;
     color: var(--color-text-main);
     margin-bottom: 0;
     opacity: 0;
@@ -168,6 +171,8 @@
 
 .tech-highlight {
     color: var(--color-accent);
+    font-size: 1.05em;
+    font-weight: 700;
     position: relative;
     display: inline-block;
     transition: opacity 0.3s ease, transform 0.3s ease;
