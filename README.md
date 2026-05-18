@@ -2,6 +2,9 @@
 
 A premium, agent-themed full-stack portfolio showcasing projects and skills in AI Engineering and Backend Development, featuring an interactive **RAG AI Assistant** to answer recruiter queries in real-time.
 
+> [!NOTE]
+> For an exhaustive deep-dive into the backend RAG pipeline, frontend component injection, and overall architecture, see the full **[Project Details](PROJECT_DETAILS.md)** document.
+
 ## Features
 
 - **RAG AI Chatbot**: An interactive portfolio assistant powered by **Groq (Llama 3.1 8B)** and **ChromaDB** vector store to answer real-time questions about Vivesh's career, education, and projects using local portfolio data.
