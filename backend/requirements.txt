@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+langchain
+langchain-groq
+langchain-google-genai
+chromadb
+sentence-transformers
+pydantic
+sse-starlette
+python-dotenv

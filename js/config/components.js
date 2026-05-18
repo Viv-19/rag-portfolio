@@ -10,4 +10,6 @@ export const COMPONENT_MANIFEST = [
     { mountId: 'mount-sections', path: 'components/skills.html' },
     { mountId: 'mount-sections', path: 'components/projects.html' },
     { mountId: 'mount-sections', path: 'components/contact.html' },
+    
+    { mountId: 'mount-chatbot', path: 'components/chatbot.html' }
 ];

@@ -1,0 +1,10 @@
+.env
+backend/.env
+
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Chroma DB
+backend/chroma_data/
