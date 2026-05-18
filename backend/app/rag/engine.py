@@ -16,51 +16,58 @@ load_dotenv()
 
 def format_docs(docs):
     """Format Chroma documents into a single string for context."""
-    # Docs from chromadb client direct query return a dictionary with 'documents'
     if isinstance(docs, dict) and "documents" in docs:
         doc_list = docs["documents"][0] if docs["documents"] else []
-        return "\n\n".join(doc_list)
+        return "\n\n---\n\n".join(doc_list)
     return ""
 
-def get_retriever():
-    """Returns a simple retriever function."""
+# ── Singleton chain + retriever ───────────────────────────────────
+_cached_chain = None
+_cached_retriever = None
+
+def _build_retriever():
+    """Build retriever once, reuse the same collection handle."""
+    global _cached_retriever
+    if _cached_retriever is not None:
+        return _cached_retriever
+
     collection = get_collection()
-    
+
     def retrieve(query: str):
         results = collection.query(
             query_texts=[query],
-            n_results=4
+            n_results=8
         )
         return format_docs(results)
-    
-    return retrieve
+
+    _cached_retriever = retrieve
+    return _cached_retriever
 
 def get_rag_chain():
-    """Builds and returns the RAG chain."""
-    
-    # Initialize the primary LLM (Groq Llama 3)
+    """Builds and returns the RAG chain (singleton — built once, reused forever)."""
+    global _cached_chain
+    if _cached_chain is not None:
+        return _cached_chain
+
     llm_primary = ChatGroq(
         api_key=os.getenv("GROQ_API_KEY_1"),
-        model_name="llama-3.1-8b-instant", # Fast and capable
-        temperature=0.3,
+        model_name="llama-3.1-8b-instant",
+        temperature=0.1,
         streaming=True
     )
-    
-    # Initialize the secondary LLM as fallback
+
     llm_secondary = ChatGroq(
         api_key=os.getenv("GROQ_API_KEY_2"),
-        model_name="llama-3.1-8b-instant", 
-        temperature=0.3,
+        model_name="llama-3.1-8b-instant",
+        temperature=0.1,
         streaming=True
     )
-    
-    # LangChain fallback mechanism: if primary fails (e.g. rate limit), use secondary
+
     llm_with_fallback = llm_primary.with_fallbacks([llm_secondary])
-    
+
     prompt = get_chat_prompt()
-    retriever = get_retriever()
-    
-    # Create the chain
+    retriever = _build_retriever()
+
     chain = (
         RunnablePassthrough.assign(
             context=lambda x: retriever(x["question"])
@@ -69,22 +76,44 @@ def get_rag_chain():
         | llm_with_fallback
         | StrOutputParser()
     )
-    
-    # Wrap with history
+
     chain_with_history = RunnableWithMessageHistory(
         chain,
         get_session_history,
         input_messages_key="question",
         history_messages_key="history",
     )
-    
-    return chain_with_history
+
+    _cached_chain = chain_with_history
+    return _cached_chain
+
+
+def warmup():
+    """Pre-initialize everything so the first real user query is instant.
+    Called once at server startup from the lifespan handler."""
+    import time
+    start = time.time()
+
+    # 1. Force-load embedding model + collection (triggers model download if needed)
+    collection = get_collection()
+    print(f"  [warmup] Collection ready ({collection.count()} docs)")
+
+    # 2. Build the full RAG chain (LLM clients, prompt, retriever)
+    get_rag_chain()
+    print(f"  [warmup] RAG chain built")
+
+    # 3. Fire a throwaway embedding query to warm the embedding model's compute path
+    collection.query(query_texts=["warmup"], n_results=1)
+    print(f"  [warmup] Embedding model warmed up")
+
+    elapsed = time.time() - start
+    print(f"  [warmup] Total warmup completed in {elapsed:.1f}s — first query will be instant!")
+
 
 async def stream_chat(session_id: str, question: str) -> AsyncGenerator[str, None]:
     """Streams the response from the RAG chain."""
     chain = get_rag_chain()
-    
-    # The chain.astream method yields chunks
+
     async for chunk in chain.astream(
         {"question": question},
         config={"configurable": {"session_id": session_id}}

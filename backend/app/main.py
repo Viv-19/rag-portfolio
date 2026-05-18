@@ -1,20 +1,47 @@
 import asyncio
+import json
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from app.rag.engine import stream_chat
+from app.rag.engine import stream_chat, warmup
+from app.vectorstore.chroma_client import get_collection, reset_collection_cache
+from app.ingestion.loader import ingest_documents
 from dotenv import load_dotenv
 
 load_dotenv()
 
-app = FastAPI(title="Portfolio AI Assistant API")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Startup: auto-ingest if needed, then warmup all heavy components."""
+    print("[startup] Initializing Portfolio AI Assistant...")
+
+    # Step 1 — Ensure documents are ingested
+    collection = get_collection()
+    if collection.count() == 0:
+        print("[startup] ChromaDB is empty — running auto-ingestion...")
+        ingest_documents()
+        reset_collection_cache()  # force re-read after ingestion
+        collection = get_collection()
+        print(f"[startup] Ingestion complete. {collection.count()} documents loaded.")
+    else:
+        print(f"[startup] ChromaDB has {collection.count()} documents. Skipping ingestion.")
+
+    # Step 2 — Warmup: pre-load embedding model, build chain, fire throwaway query
+    print("[startup] Running warmup sequence...")
+    warmup()
+    print("[startup] ✓ Server is HOT — first user query will be instant!")
+
+    yield
+
+app = FastAPI(title="Portfolio AI Assistant API", lifespan=lifespan)
 
 # Configure CORS for frontend integration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # In production, restrict this to your portfolio domain
+    allow_origins=["*"],  # In production, restrict this to your portfolio domain
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -37,18 +64,10 @@ async def chat_stream(session_id: str, message: str, request: Request):
     async def event_generator():
         try:
             async for chunk in stream_chat(session_id, message):
-                # Check if client disconnected
                 if await request.is_disconnected():
                     break
-                # Yield SSE format, replace newlines in chunks to avoid breaking SSE formatting
-                # Wait, SSE splits on \n\n. We should handle newlines if chunk contains them?
-                # Actually, standard is `data: chunk\n\n`. If chunk has newlines, 
-                # we should yield multiple data lines: `data: line1\ndata: line2\n\n`
-                # A safer approach for text streaming is just yielding a JSON object per chunk.
-                import json
                 yield f"data: {json.dumps({'chunk': chunk})}\n\n"
         except Exception as e:
-            import json
             yield f"data: {json.dumps({'error': str(e)})}\n\n"
         finally:
             yield "event: done\ndata: [DONE]\n\n"

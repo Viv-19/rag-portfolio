@@ -44,8 +44,7 @@ export function initChatbotWidget() {
     if (navChatbotBtn) {
         navChatbotBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            const isHidden = chatbotWindow.classList.contains('chatbot-hidden');
-            if (isHidden) toggleChat();
+            toggleChat();
         });
     }
 

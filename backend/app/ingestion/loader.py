@@ -1,6 +1,6 @@
 import os
 import glob
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from app.vectorstore.chroma_client import get_collection
 
 # Paths
