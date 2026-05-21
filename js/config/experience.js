@@ -7,13 +7,13 @@ export const EXPERIENCES = [
         role: 'Research Intern',
         company: 'Tata Consultancy Services (TCS) – Intel Collaboration',
         logos: [
-            'assets/tcs logo.png',
-            'assets/intel logo.png'
+            'assets/tcs logo.webp',
+            'assets/intel logo.webp'
         ],
         subtitle: 'Intel Collaboration · Research',
         period: 'Dec 2025 — Present',
         location: 'India',
-        image: 'assets/reading_paper.png',
+        image: 'assets/reading_paper.webp',
         imageAlt: 'TCS research internship',
         lead: 'Worked on an Intel-supported research initiative investigating numerical robustness in LLM inference.',
         highlights: [
@@ -28,12 +28,12 @@ export const EXPERIENCES = [
         role: 'AI Engineer Intern',
         company: 'INAI Worlds',
         logos: [
-            'assets/inai logo.png'
+            'assets/inai logo.webp'
         ],
         subtitle: 'Cloud & Production Systems',
         period: 'Jul 2025 — Nov 2025',
         location: 'Remote',
-        image: 'assets/devops.png',
+        image: 'assets/devops.webp',
         imageAlt: 'INAI Worlds internship',
         lead: 'Designed and deployed AWS cloud architecture using EC2, S3, load balancer, security groups, DNS, and database services.',
         highlights: [

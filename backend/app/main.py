@@ -32,7 +32,7 @@ async def lifespan(app: FastAPI):
     # Step 2 — Warmup: pre-load embedding model, build chain, fire throwaway query
     print("[startup] Running warmup sequence...")
     warmup()
-    print("[startup] ✓ Server is HOT — first user query will be instant!")
+    print("[startup] [OK] Server is HOT - first user query will be instant!")
 
     yield
 

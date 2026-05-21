@@ -27,8 +27,8 @@ export function initChatbotWidget() {
 
     // Toggle logic
     function toggleChat() {
-        const isHidden = chatbotWindow.classList.contains('chatbot-hidden');
-        if (isHidden) {
+        const isVisible = chatbotWindow.classList.contains('chatbot-visible');
+        if (!isVisible) {
             chatbotWindow.classList.remove('chatbot-hidden');
             chatbotWindow.classList.add('chatbot-visible');
             chatbotInput.focus();
@@ -44,7 +44,10 @@ export function initChatbotWidget() {
     if (navChatbotBtn) {
         navChatbotBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            toggleChat();
+            const isVisible = chatbotWindow.classList.contains('chatbot-visible');
+            if (!isVisible) {
+                toggleChat();
+            }
         });
     }
 
@@ -76,7 +79,7 @@ export function initChatbotWidget() {
             rowDiv.classList.add('message-row');
 
             const avatar = document.createElement('img');
-            avatar.src = 'assets/chatbot_logo.png';
+            avatar.src = 'assets/chatbot_logo.webp';
             avatar.alt = 'AI';
             avatar.classList.add('message-avatar');
 
@@ -115,7 +118,10 @@ export function initChatbotWidget() {
             });
 
             // Use EventSource for SSE streaming
-            const url = `http://localhost:8000/api/chat/stream?${params.toString()}`;
+            const apiBase = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+                ? 'http://localhost:8000'
+                : 'https://viv-19-rag-portfolio.hf.space';
+            const url = `${apiBase}/api/chat/stream?${params.toString()}`;
             const eventSource = new EventSource(url);
             
             let fullResponse = '';
@@ -149,7 +155,11 @@ export function initChatbotWidget() {
                             isFirstChunk = false;
                         }
                         fullResponse += data.chunk;
-                        aiMessageText.textContent = fullResponse;
+                        if (typeof marked !== 'undefined') {
+                            aiMessageText.innerHTML = marked.parse(fullResponse);
+                        } else {
+                            aiMessageText.textContent = fullResponse;
+                        }
                         scrollToBottom();
                     }
                 } catch (err) {

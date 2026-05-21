@@ -20,7 +20,7 @@ export async function loadAllComponents() {
         }
 
         try {
-            const response = await fetch(path);
+            const response = await fetch(path + '?v=3');
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}`);
             }

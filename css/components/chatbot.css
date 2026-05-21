@@ -10,6 +10,7 @@
     display: flex;
     flex-direction: column-reverse;
     align-items: flex-end;
+    pointer-events: none;
 }
 
 /* Floating Toggle Button */
@@ -29,6 +30,7 @@
     z-index: 1001;
     padding: 0;
     overflow: hidden;
+    pointer-events: auto;
 }
 
 .chatbot-logo-img {
